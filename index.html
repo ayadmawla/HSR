@@ -10,6 +10,37 @@
     <script src="Build/UnityLoader.js"></script>
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/HSR.json", {onProgress: UnityProgress});
+	  function UnityProgress(gameInstance, progress) {
+	  var myVar = localStorage['quest'] || '0';
+		  if (!gameInstance.Module)
+			return;
+		  if (!gameInstance.logo) {
+			gameInstance.logo = document.createElement("div");
+			gameInstance.logo.className = "logo " + gameInstance.Module.splashScreenStyle;
+			gameInstance.container.appendChild(gameInstance.logo);
+		  }
+		  if (!gameInstance.progress) {    
+			gameInstance.progress = document.createElement("div");
+			gameInstance.progress.className = "progress " + gameInstance.Module.splashScreenStyle;
+			gameInstance.progress.empty = document.createElement("div");
+			gameInstance.progress.empty.className = "empty";
+			gameInstance.progress.appendChild(gameInstance.progress.empty);
+			gameInstance.progress.full = document.createElement("div");
+			gameInstance.progress.full.className = "full";
+			gameInstance.progress.appendChild(gameInstance.progress.full);
+			gameInstance.container.appendChild(gameInstance.progress);
+		  }
+		  gameInstance.progress.full.style.width = (100 * progress) + "%";
+		  gameInstance.progress.empty.style.width = (100 * (1 - progress)) + "%";
+		  if (progress == 1){
+			gameInstance.logo.style.display = gameInstance.progress.style.display = "none";
+			gameInstance.SendMessage("Managers","ctrl", myVar);
+			}
+		}
+		function fl(value){
+				localStorage['quest'] = value;
+				location.href='https://ayadmawla.github.io/HSR/';
+		  }
     </script>
   </head>
   <body>
@@ -21,5 +52,19 @@
         <div class="title">SafeWork</div>
       </div>
     </div>
+	<div id = "main">
+	   <p><a href="https://ayadmawla.github.io/HSR/" onclick="fl(0)">Quest 1</a></p>
+	   <p><a onclick="fl(1)">Quest 2</a></p>
+	   <p><a onclick="fl(2)">https://ayadmawla.github.io/HSR/quest3</a></p>
+	   <p><input type="button" value="Quest 4" onclick="fl(3)"></p>
+	   <p><input type="button" value="Quest 5" onclick="fl(4)"></p>
+	   <p><input type="button" value="Quest 6" onclick="fl(5)"></p>
+	   <p><input type="button" value="Quest 7" onclick="fl(6)"></p>
+	   <p><input type="button" value="Quest 8" onclick="fl(7)"></p>
+	   <p><input type="button" value="Quest 9" onclick="fl(8)"></p>
+	   <p><input type="button" value="Quest 10" onclick="fl(9)"></p>
+	   <p><input type="button" value="Quest 11" onclick="fl(10)"></p>
+	   <p><input type="button" value="Quest 12" onclick="fl(11)"></p>
+	  </div>
   </body>
 </html>
